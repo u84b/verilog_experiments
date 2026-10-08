@@ -1,0 +1,89 @@
+#! /usr/bin/vvp
+:ivl_version "13.0 (stable)" "(v13_0-dirty)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "/usr/lib/ivl/system.vpi";
+:vpi_module "/usr/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/ivl/va_math.vpi";
+:vpi_module "/usr/lib/ivl/v2009.vpi";
+S_0x55c6bead2af0 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x55c6bead2c80 .scope module, "biba_tb" "biba_tb" 3 4;
+ .timescale -9 -12;
+v0x55c6beae4c00_0 .net "C", 3 0, v0x55c6bea975b0_0;  1 drivers
+v0x55c6beae4cc0_0 .var "D", 15 0;
+S_0x55c6bead2e10 .scope module, "dut" "biba" 3 9, 4 3 0, S_0x55c6bead2c80;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 16 "D";
+    .port_info 1 /OUTPUT 4 "C";
+v0x55c6bea975b0_0 .var "C", 3 0;
+v0x55c6beae4920_0 .net "D", 15 0, v0x55c6beae4cc0_0;  1 drivers
+v0x55c6beae4a00_0 .var/i "i", 31 0;
+v0x55c6beae4ac0_0 .var/i "j", 31 0;
+E_0x55c6bead32d0 .event anyedge, v0x55c6beae4920_0, v0x55c6bea975b0_0;
+    .scope S_0x55c6bead2e10;
+T_0 ;
+    %wait E_0x55c6bead32d0;
+    %pushi/vec4 0, 0, 4;
+    %store/vec4 v0x55c6bea975b0_0, 0, 4;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x55c6beae4a00_0, 0, 32;
+T_0.0 ; Top of for-loop
+    %load/vec4 v0x55c6beae4a00_0;
+    %cmpi/s 16, 0, 32;
+	  %jmp/0xz T_0.1, 5;
+    %load/vec4 v0x55c6beae4920_0;
+    %load/vec4 v0x55c6beae4a00_0;
+    %part/s 1;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.3, 8;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x55c6beae4ac0_0, 0, 32;
+T_0.5 ; Top of for-loop
+    %load/vec4 v0x55c6beae4ac0_0;
+    %load/vec4 v0x55c6beae4a00_0;
+    %cmp/s;
+	  %jmp/0xz T_0.6, 5;
+    %load/vec4 v0x55c6bea975b0_0;
+    %addi 1, 0, 4;
+    %store/vec4 v0x55c6bea975b0_0, 0, 4;
+T_0.7 ; for-loop step statement
+    %load/vec4 v0x55c6beae4ac0_0;
+    %addi 1, 0, 32;
+    %store/vec4 v0x55c6beae4ac0_0, 0, 32;
+    %jmp T_0.5;
+T_0.6 ; for-loop exit label
+T_0.3 ;
+T_0.2 ; for-loop step statement
+    %load/vec4 v0x55c6beae4a00_0;
+    %addi 1, 0, 32;
+    %store/vec4 v0x55c6beae4a00_0, 0, 32;
+    %jmp T_0.0;
+T_0.1 ; for-loop exit label
+    %jmp T_0;
+    .thread T_0, $push;
+    .scope S_0x55c6bead2c80;
+T_1 ;
+    %vpi_call/w 3 15 "$dumpfile", "biba.vcd" {0 0 0};
+    %vpi_call/w 3 16 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x55c6bead2c80 {0 0 0};
+    %pushi/vec4 1, 0, 16;
+    %store/vec4 v0x55c6beae4cc0_0, 0, 16;
+    %delay 100000, 0;
+    %pushi/vec4 10, 0, 16;
+    %store/vec4 v0x55c6beae4cc0_0, 0, 16;
+    %delay 100000, 0;
+    %pushi/vec4 65535, 0, 16;
+    %store/vec4 v0x55c6beae4cc0_0, 0, 16;
+    %delay 100000, 0;
+    %vpi_call/w 3 21 "$finish" {0 0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "biba_tb.v";
+    "biba.v";
